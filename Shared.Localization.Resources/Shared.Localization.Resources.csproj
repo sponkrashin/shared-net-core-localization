@@ -8,4 +8,19 @@
     <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="3.1.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Localization.Main\Controllers\HomeController.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>HomeController.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Localization.Main\Controllers\HomeController.en.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Localization.Main.ru.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

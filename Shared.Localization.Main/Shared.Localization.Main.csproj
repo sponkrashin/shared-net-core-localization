@@ -14,4 +14,19 @@
     <ProjectReference Include="..\Shared.Localization.Resources\Shared.Localization.Resources.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Controllers.HomeController.en.resx">
+      <LastGenOutput>Controllers.HomeController.en.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Controllers.HomeController.en.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>HomeController.en.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>
