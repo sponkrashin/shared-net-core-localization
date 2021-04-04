@@ -1,15 +1,17 @@
 namespace Shared.Localization.Main
 {
+    using System;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc.Localization;
+    using Microsoft.AspNetCore.Mvc.Razor;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Localization;
 
     using Shared.Localization.Resources;
-
-    using Test.Localization.Resources;
 
     public class Startup
     {
@@ -23,10 +25,19 @@ namespace Shared.Localization.Main
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.AddTransient(typeof(IStringLocalizer<>), typeof(SharedStringLocalizer<>));
+            services
+               .AddControllersWithViews()
+               .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options => options.ResourcesPath = "Resources")
+               .AddDataAnnotationsLocalization(options =>
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                    {
+                        var localizerType = typeof(SharedStringLocalizer<>).MakeGenericType(type);
+                        return Activator.CreateInstance(localizerType, factory) as IStringLocalizer;
+                    });
 
-            services.AddControllersWithViews();
+            services.AddTransient(typeof(IStringLocalizer<>), typeof(SharedStringLocalizer<>));
+            services.AddTransient(typeof(IHtmlLocalizer<>), typeof(SharedHtmlLocalizer<>));
+            services.AddTransient<IViewLocalizer, SharedViewLocalizer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

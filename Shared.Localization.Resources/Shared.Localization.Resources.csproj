@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="3.1.6" />
   </ItemGroup>
 
@@ -12,6 +13,14 @@
     <EmbeddedResource Update="Resources\Localization.Main\Controllers\HomeController.en.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>HomeController.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Main\SharedResource\SharedResource.en.resx">
+      <LastGenOutput>Controllers.HomeController.en.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Main\Views\Home\Index\Index.ABC.en.resx">
+      <LastGenOutput>Controllers.HomeController.en.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

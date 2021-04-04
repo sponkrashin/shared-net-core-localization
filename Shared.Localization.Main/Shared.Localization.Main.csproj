@@ -16,17 +16,17 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Resources\Controllers.HomeController.en.resx">
+      <LastGenOutput>Controllers.HomeController.ru.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Home\Index.en.resx">
+      <LastGenOutput>Index.ru.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SharedResource.en.resx">
       <LastGenOutput>Controllers.HomeController.en.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources\Controllers.HomeController.en.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>HomeController.en.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
 
 </Project>

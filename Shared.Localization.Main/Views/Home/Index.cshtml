@@ -1,6 +1,15 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@using Shared.Localization.Main
+@using Shared.Localization.Main.Controllers
+
+@{
     Layout = null;
 }
+
+@inject IStringLocalizer<HomeController> StringLocalizer
+@inject IHtmlLocalizer<SharedResource> HtmlLocalizer
+@inject IViewLocalizer ViewLocalizer
 
 <!DOCTYPE html>
 
@@ -10,7 +19,13 @@
 </head>
 <body>
     <div>
-        @ViewBag.Test
+        StringLocalizer: @StringLocalizer["Test"]
+    </div>
+    <div>
+        HtmlLocalizer: @HtmlLocalizer["Test"]
+    </div>
+    <div>
+        ViewLocalizer: @ViewLocalizer["Test"]
     </div>
 </body>
 </html>

@@ -6,16 +6,17 @@
     using System.Linq;
     using System.Reflection;
 
+    using Microsoft.AspNetCore.Mvc.Localization;
     using Microsoft.Extensions.Localization;
 
-    public class SharedStringLocalizer<T> : IStringLocalizer<T>
+    public class SharedHtmlLocalizer<T> : IHtmlLocalizer<T>
     {
         private const string AssemblyNamePrefix = "Shared.Localization";
 
-        private readonly IStringLocalizer localLocalizer;
-        private readonly IStringLocalizer sharedLocalizer;
+        private readonly IHtmlLocalizer localLocalizer;
+        private readonly IHtmlLocalizer sharedLocalizer;
 
-        public SharedStringLocalizer(IStringLocalizerFactory factory)
+        public SharedHtmlLocalizer(IHtmlLocalizerFactory factory)
         {
             this.localLocalizer = this.sharedLocalizer = factory.Create(typeof(T));
 
@@ -35,6 +36,24 @@
             this.sharedLocalizer = factory.Create(resourceName, sharedAssemblyName);
         }
 
+        public LocalizedString GetString(string name)
+        {
+            var localString = this.localLocalizer.GetString(name);
+
+            return localString.ResourceNotFound
+                ? this.sharedLocalizer.GetString(name)
+                : localString;
+        }
+
+        public LocalizedString GetString(string name, params object[] arguments)
+        {
+            var localString = this.localLocalizer.GetString(name, arguments);
+
+            return localString.ResourceNotFound
+                ? this.sharedLocalizer.GetString(name, arguments)
+                : localString;
+        }
+
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
         {
             try
@@ -52,32 +71,32 @@
         }
 
         [Obsolete]
-        public IStringLocalizer WithCulture(CultureInfo culture)
+        public IHtmlLocalizer WithCulture(CultureInfo culture)
         {
             return this;
         }
 
-        public LocalizedString this[string name]
+        public LocalizedHtmlString this[string name]
         {
             get
             {
                 var localString = this.localLocalizer[name];
 
-                return localString.ResourceNotFound
+                return localString.IsResourceNotFound
                     ? this.sharedLocalizer[name]
                     : localString;
             }
         }
 
-        public LocalizedString this[string name, params object[] arguments]
+        public LocalizedHtmlString this[string name, params object[] arguments]
         {
             get
             {
-                var localString = this.localLocalizer[name];
+                var localString = this.localLocalizer[name, arguments];
 
-                return localString.ResourceNotFound
+                return localString.IsResourceNotFound
                     ? this.sharedLocalizer[name, arguments]
-                    : this.localLocalizer[name, arguments];
+                    : localString;
             }
         }
     }
